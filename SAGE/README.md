@@ -1,8 +1,22 @@
 # Sentient Agent as a Judge
+
+## Overview
+We propose Sentient Agent as a Judge, the first fully-automated evaluation framework that simulates
+evolving human emotion and inner cognition to benchmark higher - order social reasoning in
+LLMs.
+
+
+![framework](https://github.com/Tencent/digitalhuman/blob/main/SAGE/figures/framework.png)
+<p align="center"><sub>An illustration of our proposed SAGE, a novel framework to automatically assess higher-order social cognition in target LLMs</sub></p>
+
 ## Main Result
 
+### Sentient leaderboard
+Here we presents the Sentient leaderboard using DeepSeek-V3 as the judge, alongside Arena rankings
+for comparison. We mainly focus on the top-10 models from the Arena leaderboard for which APIs are
+available (e.g., Grok-3 was excluded due to lack of access). Additionally, we include eight representative LLMs from four major families and two smaller-scale instruction-tuned models.
 
-<table>
+<table align="center">
 <tbody>
     <tr>
         <td colspan="2">Model</th><td colspan="2">Arena </th><td colspan="2">Sentient</th><td colspan="2">Supportive Dialogue </th>
@@ -214,6 +228,67 @@
     <td>70</td>
 </tr>
 </table>
+<p align="center"><sub>Sentient leaderboard using DeepSeek-V3 as the sentient agent. Arena scores are included for comparison. </sub></p>
+
+### Results of different sentient agents
+These results encompass average emotional response scores and the number of tokens generated in con-
+versations facilitated by different sentient agents: DeepSeek-V3, GPT-4o, Gemini2.5, and Gemini2.5-
+Think. 
+
+<p align="center">
+<img src="https://github.com/Tencent/digitalhuman/blob/main/SAGE/figures/token_emotion_v3.png" width="300">
+<img src="https://github.com/Tencent/digitalhuman/blob/main/SAGE/figures/token_emotoin_4o.png" width="300">
+</p>
+<p align="center">    
+    <sub>DeepSeek-V3</sub>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sub>GPT-4o</sub>
+</p>
+<p align="center">
+<img src="https://github.com/Tencent/digitalhuman/blob/main/SAGE/figures/token_emotion_gemini.png" width="300">
+<img src="https://github.com/Tencent/digitalhuman/blob/main/SAGE/figures/token_emotion_geminithink.png" width="300">
+</p>
+<p align="center">    
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sub>Gemini2.5</sub>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sub>Gemini2.5-think</sub>
+</p>
+
+### Social Cognition Coordinate
+we conceptualize a two-
+dimensional “Social Cognition Coordinate”. The Y-axis represents the interaction focus, ranging
+from empathy-oriented (top) to solution-oriented (bottom). The X-axis captures the interaction style,
+from structured (left) to creative (right). We plot the models within this coordinate space based
+on qualitative analysis of their dialogue patterns. 
+
+<p align="center">
+<img src="https://github.com/Tencent/digitalhuman/blob/main/SAGE/figures/coordinate.png" width="600">
+</p>
+
+
+### BLRI and Utterance Quality Test
+
+we validate the reasonableness of SAGE by examining the correlation between user
+emotions – the primary output metric of our framework – and internal user thoughts and dialogue
+utterances. 
+
+
+<p align="center">
+<img src="https://github.com/Tencent/digitalhuman/blob/main/SAGE/figures/correlation_thought.png" width="300">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://github.com/Tencent/digitalhuman/blob/main/SAGE/figures/correlation_utterance.png" width="276">
+</p>
+<p align="center">    
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sub>Correlation between emotion and internaluser thought</sub> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sub>Correlation between emotion and dialogue utterance</sub>&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+
+### Case Study
+
+Example dialogues of representative LLMs with the simulated user. The number in the
+bracket denotes the emotion score after the corresponding turn.
+
+<p align="center">
+<img src="https://github.com/Tencent/digitalhuman/blob/main/SAGE/figures/case.png" width="600">
+</p>
+
 
 ## Getting Started
 
