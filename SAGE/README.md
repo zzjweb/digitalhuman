@@ -31,47 +31,47 @@ available (e.g., Grok-3 was excluded due to lack of access). Additionally, we in
         <td>Rank</td>
         <td>Score</td>
     </tr>
-    <tr>
+ <tr>
     <td>GPT-4o-Latest</td>
     <td>2025-03-26</td>
     <td>1</td>
     <td>79.9</td>
     <td>51</td>
     <td>4</td>
-    <td>2</td>
-    <td>1408</td>
+    <td>3</td>
+    <td>1405</td>
 </tr>
-    <tr>
+<tr>
     <td>GPT-4.1</td>
     <td>2025-04-14</td>
     <td>2</td>
     <td>68.2</td>
     <td>35</td>
     <td>13</td>
-    <td>9</td>
-    <td>1363</td>
+    <td>8</td>
+    <td>1365</td>
 </tr>
-    <tr>
+<tr>
     <td>Gemini2.5-Flash-Think</td>
-    <td>2025-04-17</td>
+    <td>2025-05-20</td>
     <td>3</td>
-    <td>65.9</td>
-    <td>35</td>
-    <td>19</td>
-    <td>3</td>
-    <td>1393</td>
+    <td>66.1</td>
+    <td>39</td>
+    <td>14</td>
+    <td>2</td>
+    <td>1424</td>
 </tr>
-    <tr>
-        <td>Gemini2.5-Pro</td>
-        <td>2025-03-25</td>
-        <td>4</td>
-        <td>62.9</td>
-        <td>34</td>
-        <td>25</td>
-        <td>1</td>
-        <td>1439</td>
-    </tr>
-  <tr>
+<tr>
+    <td>Gemini2.5-Pro</td>
+    <td>2025-05-06</td>
+    <td>4</td>
+    <td>62.9</td>
+    <td>34</td>
+    <td>25</td>
+    <td>1</td>
+    <td>1439</td>
+</tr>
+<tr>
     <td>o3</td>
     <td>2025-04-16</td>
     <td>5</td>
@@ -79,9 +79,8 @@ available (e.g., Grok-3 was excluded due to lack of access). Additionally, we in
     <td>32</td>
     <td>14</td>
     <td>2</td>
-    <td>1418</td>
+    <td>1409</td>
 </tr>
-
 <tr>
     <td>GPT-4.5-Preview</td>
     <td>2025-02-27</td>
@@ -89,19 +88,18 @@ available (e.g., Grok-3 was excluded due to lack of access). Additionally, we in
     <td>62.7</td>
     <td>23</td>
     <td>15</td>
-    <td>4</td>
-    <td>1398</td>
+    <td>5</td>
+    <td>1395</td>
 </tr>
-
 <tr>
-    <td>Gemini2.0-Flash-Think</td>
-    <td>2025-02-06</td>
+    <td>Claude4.0-Think</td>
+    <td>2025-05-23</td>
     <td>7</td>
-    <td>62.3</td>
-    <td>23</td>
-    <td>23</td>
-    <td>7</td>
-    <td>1380</td>
+    <td>61.8</td>
+    <td>22</td>
+    <td>17</td>
+    <td>-</td>
+    <td>-</td>
 </tr>
 <tr>
     <td>Claude3.7-Think</td>
@@ -110,111 +108,128 @@ available (e.g., Grok-3 was excluded due to lack of access). Additionally, we in
     <td>61.3</td>
     <td>23</td>
     <td>19</td>
-    <td>21</td>
-    <td>1301</td>
+    <td>27</td>
+    <td>1297</td>
 </tr>
-
+<tr>
+    <td>Doubao-1.5-Pro-Think</td>
+    <td>2025-04-28</td>
+    <td>9</td>
+    <td>61.2</td>
+    <td>29</td>
+    <td>20</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td>Hunyuan-TurboS</td>
+    <td>2025-04-16</td>
+    <td>10</td>
+    <td>58.9</td>
+    <td>23</td>
+    <td>21</td>
+    <td>8</td>
+    <td>1356</td>
+</tr>
 <tr>
     <td>Claude3.7</td>
     <td>2025-02-24</td>
-    <td>9</td>
+    <td>11</td>
     <td>54.8</td>
     <td>19</td>
     <td>24</td>
-    <td>30</td>
-    <td>1292</td>
+    <td>34</td>
+    <td>1287</td>
 </tr>
 <tr>
     <td>DeepSeek-V3-0324</td>
     <td>2025-03-24</td>
-    <td>10</td>
+    <td>12</td>
     <td>54.4</td>
     <td>19</td>
     <td>23</td>
-    <td>7</td>
-    <td>1373</td>
+    <td>8</td>
+    <td>1369</td>
 </tr>
-
+<tr>
+    <td>Claude4.0</td>
+    <td>2025-05-23</td>
+    <td>13</td>
+    <td>53.8</td>
+    <td>16</td>
+    <td>64</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
 <tr>
     <td>DeepSeek-R1</td>
     <td>2025-01-21</td>
-    <td>11</td>
+    <td>14</td>
     <td>53.7</td>
     <td>31</td>
     <td>28</td>
-    <td>10</td>
-    <td>1358</td>
+    <td>9</td>
+    <td>1355</td>
 </tr>
 <tr>
-    <td>DeepSeek-V3</td>
-    <td>2024-12-27</td>
-    <td>12</td>
-    <td>37.6</td>
-    <td>5</td>
-    <td>39</td>
+    <td>Qwen3-235B-A22B</td>
+    <td>2025-04-29</td>
+    <td>15</td>
+    <td>53.7</td>
+    <td>20</td>
+    <td>22</td>
+    <td>13</td>
+    <td>1339</td>
+</tr>
+<tr>
+    <td>QwQ-32B</td>
+    <td>2025-03-06</td>
+    <td>16</td>
+    <td>44.3</td>
     <td>18</td>
-    <td>1318</td>
+    <td>40</td>
+    <td>22</td>
+    <td>1310</td>
 </tr>
 <tr>
     <td>o4-mini</td>
     <td>2025-04-16</td>
-    <td>13</td>
+    <td>17</td>
     <td>35.9</td>
     <td>10</td>
     <td>48</td>
     <td>10</td>
-    <td>1351</td>
+    <td>1345</td>
 </tr>
 <tr>
     <td>Llama3.3-70B</td>
     <td>2024-12-06</td>
-    <td>14</td>
+    <td>18</td>
     <td>33.3</td>
     <td>7</td>
     <td>47</td>
-    <td>56</td>
-    <td>1256</td>
-</tr>
-<tr>
-    <td>Gemini2.0-Flash</td>
-    <td>2025-02-06</td>
-    <td>15</td>
-    <td>32.9</td>
-    <td>8</td>
-    <td>45</td>
-    <td>10</td>
-    <td>1354</td>
-</tr>
-
-<tr>
-    <td>GPT-4o</td>
-    <td>2024-08-06</td>
-    <td>16</td>
-    <td>31.8</td>
-    <td>7</td>
-    <td>51</td>
-    <td>45</td>
-    <td>1265</td>
+    <td>63</td>
+    <td>1254</td>
 </tr>
 <tr>
     <td>o1</td>
     <td>2024-12-17</td>
-    <td>17</td>
+    <td>19</td>
     <td>29.0</td>
     <td>5</td>
     <td>51</td>
-    <td>12</td>
-    <td>1350</td>
+    <td>11</td>
+    <td>1347</td>
 </tr>
 <tr>
     <td>Qwen2.5-72B</td>
     <td>2024-09-19</td>
-    <td>18</td>
+    <td>20</td>
     <td>19.1</td>
     <td>4</td>
     <td>70</td>
-    <td>56</td>
-    <td>1257</td>
+    <td>62</td>
+    <td>1254</td>
 </tr>
 </table>
 <p align="center"><sub>Sentient leaderboard using DeepSeek-V3 as the sentient agent. Arena scores are included for comparison. </sub></p>
