@@ -47,12 +47,16 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
         self.pretraining_tp = config.pretraining_tp
         self.vocab_size = config.vocab_size
         self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
-
+        self.method = "l2"
         # Initialize weights and apply final processing
         self.post_init()
 
     def get_model(self):
         return self.model
+
+    def set_method(self, method):
+        self.method = method
+        print(f"Set method to {method}")
 
     def forward(
         self,

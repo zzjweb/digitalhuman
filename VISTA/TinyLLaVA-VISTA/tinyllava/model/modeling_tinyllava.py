@@ -63,7 +63,7 @@ class TinyLlavaForConditionalGeneration(TinyLlavaPreTrainedModel):
         self.language_model = LLMFactory(config.llm_model_name_or_path)[0](config.text_config)
         self.vision_tower = VisionTowerFactory(config.vision_model_name_or_path)(config.vision_config)
         self.connector = ConnectorFactory(config.connector_type)(config)
-
+        self.method = "l2"
         (Tokenizer, post_load) = LLMFactory(config.llm_model_name_or_path)[1]
         self.tokenizer = post_load(Tokenizer.from_pretrained(
             config.tokenizer_name_or_path,
@@ -74,7 +74,9 @@ class TinyLlavaForConditionalGeneration(TinyLlavaPreTrainedModel):
         ))
         self.post_init()
 
-    
+    def set_method(self, method):
+        self.method = method
+
     def get_input_embeddings(self):
         return self.language_model.get_input_embeddings()
 
