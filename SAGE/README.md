@@ -38,7 +38,7 @@ available (e.g., Grok-3 was excluded due to lack of access). Additionally, we in
     <td>79.9</td>
     <td>51</td>
     <td>4</td>
-    <td>3</td>
+    <td>2</td>
     <td>1405</td>
 </tr>
 <tr>
@@ -88,7 +88,7 @@ available (e.g., Grok-3 was excluded due to lack of access). Additionally, we in
     <td>62.7</td>
     <td>23</td>
     <td>15</td>
-    <td>5</td>
+    <td>4</td>
     <td>1395</td>
 </tr>
 <tr>
@@ -188,7 +188,7 @@ available (e.g., Grok-3 was excluded due to lack of access). Additionally, we in
     <td>44.3</td>
     <td>18</td>
     <td>40</td>
-    <td>22</td>
+    <td>21</td>
     <td>1310</td>
 </tr>
 <tr>
@@ -208,7 +208,7 @@ available (e.g., Grok-3 was excluded due to lack of access). Additionally, we in
     <td>33.3</td>
     <td>7</td>
     <td>47</td>
-    <td>63</td>
+    <td>64</td>
     <td>1254</td>
 </tr>
 <tr>
@@ -228,7 +228,7 @@ available (e.g., Grok-3 was excluded due to lack of access). Additionally, we in
     <td>19.1</td>
     <td>4</td>
     <td>70</td>
-    <td>62</td>
+    <td>64</td>
     <td>1254</td>
 </tr>
 </table>
