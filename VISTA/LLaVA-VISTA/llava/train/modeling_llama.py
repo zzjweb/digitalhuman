@@ -1429,6 +1429,7 @@ class LlamaForCausalLM(LlamaPreTrainedModel):
             shift_labels = shift_labels.view(-1).to(device)
 
             loss = loss_fct(shift_logits, shift_labels)
+            loss = loss.to(dtype=dtype)
             if torch.isnan(loss):
                 print("Loss is NaN, resetting to 0.0")
                 loss = torch.tensor(0.0, dtype=dtype, device=device)
