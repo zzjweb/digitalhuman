@@ -8,6 +8,21 @@ Emotion Rewards for Empathetic Agents </a></h2>
 
 </h5>
 
+<div>
+The first RLVR framework to boost LLM empathy using a simulated user that turns emotional reactions into reward signals.
+</div>
+</div>
+
+<div>
+<br>
+
+<div align="center">
+
+[![Model](https://img.shields.io/badge/Model-4d5eff?style=for-the-badge&logo=huggingface&logoColor=ffffff&labelColor)](https://huggingface.co/RLVER)
+[![Github](https://img.shields.io/badge/Code-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Tencent/digitalhuman/tree/main/RLVER)
+</div>
+</div>
+
 This is the official implementation of the following paper:
 
 > **RLVER: Reinforcement Learning with Verifiable
