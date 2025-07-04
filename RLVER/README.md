@@ -13,12 +13,12 @@ This is the official implementation of the following paper:
 > **RLVER: Reinforcement Learning with Verifiable
 Emotion Rewards for Empathetic Agents** 
 
-<p align="center"><img width="90%" src="figs/framework.png" /></p>
+<p align="center"><img width="90%" src="code/figs/framework.png" /></p>
 <p align="center"><em>The overview of RLVER. In this work, we present the first end-to-end reinforcement-learning framework that equips
 an LLM with human-level empathetic skills by optimizing against verifiable emotion
 rewards.</em></p>
 
-<p align="center"><img width="90%" src="figs/main_result.png" /></p>
+<p align="center"><img width="90%" src="code/figs/main_result.png" /></p>
 <p align="center"><em>The main result of RLVER.</em></p>
 
 
