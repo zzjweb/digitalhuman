@@ -20,6 +20,7 @@ The first RLVR framework to boost LLM empathy using a simulated user that turns 
 
 [![Model](https://img.shields.io/badge/Model-4d5eff?style=for-the-badge&logo=huggingface&logoColor=ffffff&labelColor)](https://huggingface.co/RLVER)
 [![Github](https://img.shields.io/badge/Code-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Tencent/digitalhuman/tree/main/RLVER)
+[![arXiv](https://img.shields.io/badge/arXiv-2507.03112-b31b1b.svg?style=for-the-badge)](https://arxiv.org/abs/2507.03112)
 </div>
 </div>
 
