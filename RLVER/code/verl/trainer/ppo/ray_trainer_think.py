@@ -520,18 +520,39 @@ class RayPPOTrainer(object):
         print("[validate_config] All configuration checks passed successfully!")
 
     def _create_dataloader(self):
-
-        self.train_dataset = RLHFDataset(parquet_files=self.config.data.train_files,
-                                         tokenizer=self.tokenizer,
-                                         prompt_key=self.config.data.prompt_key,
-                                         response_key=self.config.data.response_key,
-                                         max_prompt_length=self.config.data.max_prompt_length,
-                                         max_response_length=self.config.data.max_response_length,
-                                         filter_prompts=True,
-                                         return_raw_chat=self.config.data.get('return_raw_chat', False),
-                                         truncation='error',
-                                         trajectory_injection=self.config.trainer.trajectory_injection,
-                                         config=self.config)
+        # TODO: we have to make sure the batch size is divisible by the dp size
+        
+        use_virtual_dataset = True
+        
+        if use_virtual_dataset:
+            from verl.utils.dataset.rl_dataset import VirtualRLHFDataset
+            
+            virtual_size = self.config.data.get('virtual_dataset_size', 
+                                              self.config.trainer.total_training_steps * self.config.data.train_batch_size)
+            
+            print(f"Using virtual dataset with size: {virtual_size}")
+            
+            self.train_dataset = VirtualRLHFDataset(virtual_size=virtual_size,
+                                                   tokenizer=self.tokenizer,
+                                                   prompt_key=self.config.data.prompt_key,
+                                                   response_key=self.config.data.response_key,
+                                                   max_prompt_length=self.config.data.max_prompt_length,
+                                                   max_response_length=self.config.data.max_response_length,
+                                                   return_raw_chat=self.config.data.get('return_raw_chat', False),
+                                                   truncation='error',
+                                                   trajectory_injection=self.config.trainer.trajectory_injection)
+        else:
+            print("Using traditional RLHFDataset with parquet files")
+            self.train_dataset = RLHFDataset(parquet_files=self.config.data.train_files,
+                                           tokenizer=self.tokenizer,
+                                           prompt_key=self.config.data.prompt_key,
+                                           response_key=self.config.data.response_key,
+                                           max_prompt_length=self.config.data.max_prompt_length,
+                                           max_response_length=self.config.data.max_response_length,
+                                           filter_prompts=True,
+                                           return_raw_chat=self.config.data.get('return_raw_chat', False),
+                                           truncation='error',
+                                           trajectory_injection=self.config.trainer.trajectory_injection)
         # use sampler for better ckpt resume
         if self.config.data.shuffle:
             train_dataloader_generator = torch.Generator()
@@ -546,16 +567,30 @@ class RayPPOTrainer(object):
                                                    collate_fn=collate_fn,
                                                    sampler=sampler)
 
-        self.val_dataset = RLHFDataset(parquet_files=self.config.data.val_files,
-                                       tokenizer=self.tokenizer,
-                                       prompt_key=self.config.data.prompt_key,
-                                       response_key=self.config.data.response_key,
-                                       max_prompt_length=self.config.data.max_prompt_length,
-                                       max_response_length=self.config.data.max_response_length,
-                                       filter_prompts=True,
-                                       return_raw_chat=self.config.data.get('return_raw_chat', False),
-                                       truncation='error',
-                                       config=self.config)
+        if use_virtual_dataset:
+            val_virtual_size = self.config.data.get('val_virtual_dataset_size', 
+                                                  self.config.data.get('val_batch_size', 32) * 10)  
+            
+            print(f"Using virtual validation dataset with size: {val_virtual_size}")
+            
+            self.val_dataset = VirtualRLHFDataset(virtual_size=val_virtual_size,
+                                                 tokenizer=self.tokenizer,
+                                                 prompt_key=self.config.data.prompt_key,
+                                                 response_key=self.config.data.response_key,
+                                                 max_prompt_length=self.config.data.max_prompt_length,
+                                                 max_response_length=self.config.data.max_response_length,
+                                                 return_raw_chat=self.config.data.get('return_raw_chat', False),
+                                                 truncation='error')
+        else:
+            self.val_dataset = RLHFDataset(parquet_files=self.config.data.val_files,
+                                         tokenizer=self.tokenizer,
+                                         prompt_key=self.config.data.prompt_key,
+                                         response_key=self.config.data.response_key,
+                                         max_prompt_length=self.config.data.max_prompt_length,
+                                         max_response_length=self.config.data.max_response_length,
+                                         filter_prompts=True,
+                                         return_raw_chat=self.config.data.get('return_raw_chat', False),
+                                         truncation='error')
         self.val_dataloader = StatefulDataLoader(
             dataset=self.val_dataset,
             # Validation datasets are sent to inference engines as a whole batch,
@@ -585,6 +620,7 @@ class RayPPOTrainer(object):
         with open_dict(self.config):
             self.config.actor_rollout_ref.actor.optim.total_training_steps = total_training_steps
             self.config.critic.optim.total_training_steps = total_training_steps
+
 
     def _maybe_log_val_generations_to_wandb(self, inputs, outputs, scores):
         """Log a table of validation samples to wandb"""

@@ -18,8 +18,8 @@ ray job submit --address="http://127.0.0.1:8265" \
     "working_dir": "./",
     "pip": ["latex2sympy2", "word2number", "timeout_decorator"]
     }' -- PYTHONUNBUFFERED=1 HYDRA_FULL_ERROR=1 python3 -m verl.trainer.main_ppo \
-    data.train_files=$DATA_DIR/train.parquet \
-    data.val_files=$DATA_DIR/test.parquet \
+    data.virtual_dataset_size=32000 \
+    data.val_virtual_dataset_size=320 \
     data.prompt_key=prompt \
     data.train_batch_size=32 \
     data.val_batch_size=32 \

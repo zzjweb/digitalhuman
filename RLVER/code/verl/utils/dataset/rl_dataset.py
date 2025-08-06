@@ -17,7 +17,7 @@ import os
 from typing import List, Union
 import copy
 import pandas as pd
-import subprocess
+
 import torch
 import numpy as np
 from torch.utils.data import Dataset
@@ -27,14 +27,15 @@ from verl.utils.model import compute_position_id_with_mask
 import verl.utils.torch_functional as verl_F
 from verl.workers.rollout.vllm_rollout.system_prompt import *
 # from verl.workers.rollout.vllm_rollout.hard_player_simulator4test import *
-# from verl.workers.rollout.vllm_rollout.hard_player_simulator import *
-from verl.workers.rollout.vllm_rollout.hard_player_simulator_dsv3 import *
-# from verl.workers.rollout.vllm_rollout.final_benchmark_simulator import *
+# from verl.workers.rollout.vllm_rollout.hard_player_simulator_intask import *
 # from verl.workers.rollout.vllm_rollout.benchmark_simulator_depolyed import *
-# from verl.workers.rollout.vllm_rollout.benchmark_simulator_deployed_easy import *
+from verl.workers.rollout.vllm_rollout.benchmark_simulator_easier_depolyed import *
+# from verl.workers.rollout.vllm_rollout.hard_player_simulator_dsv3 import *
+# from verl.workers.rollout.vllm_rollout.hard_player_simulator_dsv3 import *
 
 
 from verl.utils.py_functional import to_1d_np_array
+import json
 
 def recursive_convert(item):#removes all np arrays
     if isinstance(item, np.ndarray):
@@ -91,8 +92,7 @@ class RLHFDataset(Dataset):
                  chat_template_func=None,
                  return_raw_chat=False,
                  truncation='error',
-                 trajectory_injection=False,
-                 config=None):
+                 trajectory_injection=False):
         if not isinstance(parquet_files, (List, ListConfig)):
             parquet_files = [parquet_files]
 
@@ -111,7 +111,6 @@ class RLHFDataset(Dataset):
         self.chat_template_func = chat_template_func
         self.truncation = truncation
         self.trajectory_injection = trajectory_injection
-        self.config = config
 
         # whether to store the dataset in state_dict()
         # default not store
@@ -164,13 +163,17 @@ class RLHFDataset(Dataset):
 
         simulator_dir = os.path.join("YOUR_DIR_TO_SAVE_SIMULATOR_LOG", 'simulator')
         os.makedirs(simulator_dir, exist_ok=True) 
-                
+
         player_simulator = PlayerSimulator(simulator_dir) 
 
-        if self.config.actor_rollout_ref.thinking and self.config.actor_rollout_ref.thinking:
-            chat=[{"role":"system","content":system_prompt_train_think}]+[player_simulator.reply(None)]
-        else:
-            chat=[{"role":"system","content":system_prompt_train_unthink}]+[player_simulator.reply(None)]
+        user_reply=player_simulator.reply(None)
+
+        history_formatted = [{"role": "朋友", "content": user_reply["content"]}]
+        history_formatted = json.dumps(history_formatted, ensure_ascii=False, indent=2)
+            
+        # chat=[{"role":"user","content":f"{system_prompt_trained}\n\n# 对话上下文：\n\n用户:{user_reply["content"]}\n\n\n# 你的思考和回复：\n"}]
+        chat=[{"role":"system","content":system_prompt_trained},{"role":"user","content":user_reply["content"]}]
+        print("chat",chat)
 
         prompt_with_chat_template = self.tokenizer.apply_chat_template(chat, add_generation_prompt=True, tokenize=False)
 
@@ -205,7 +208,7 @@ class RLHFDataset(Dataset):
         # encode prompts without chat template
         if self.return_raw_chat:
             # row_dict['raw_prompt'] = chat.tolist()
-            row_dict['raw_prompt'] = recursive_convert(chat)#makes all internal np arrays into lists
+            row_dict['raw_prompt'] = recursive_convert([{"role":"system","content":system_prompt_trained}]+[user_reply])#makes all internal np arrays into lists
             row_dict['simulator']=player_simulator
             # print("raw_prompt",row_dict['raw_prompt'])
         # add index for each prompt
@@ -218,6 +221,122 @@ class RLHFDataset(Dataset):
         if not self.serialize_dataset:
             state = self.__dict__.copy()
 
+            if 'dataframe' in state:
+                del state['dataframe']
+            return state
+        return self.__dict__.copy()
+
+
+class VirtualRLHFDataset(RLHFDataset):
+
+
+    def __init__(self,
+                 virtual_size: int,
+                 tokenizer: PreTrainedTokenizer,
+                 prompt_key='prompt',
+                 response_key='gt_response',
+                 max_prompt_length=1024,
+                 max_response_length=1024,
+                 cache_dir='~/.cache/verl/rlhf',
+                 chat_template_func=None,
+                 return_raw_chat=False,
+                 truncation='error',
+                 trajectory_injection=False):
+
+        self.virtual_size = virtual_size
+        self.cache_dir = os.path.expanduser(cache_dir)
+        self.tokenizer = tokenizer
+        
+        self.prompt_key = prompt_key
+        self.response_key = response_key
+        self.max_prompt_length = max_prompt_length
+        self.max_response_length = max_response_length
+        self.filter_prompts = False  
+        self.return_raw_chat = return_raw_chat
+        self.chat_template_func = chat_template_func
+        self.truncation = truncation
+        self.trajectory_injection = trajectory_injection
+        
+        self.serialize_dataset = False
+        
+        self._create_virtual_dataframe()
+        
+        print(f'Created virtual dataset with size: {self.virtual_size}')
+
+    def _create_virtual_dataframe(self):
+        import pandas as pd
+        
+        virtual_data = []
+        for i in range(self.virtual_size):
+            virtual_data.append({
+                'index': i,
+                'extra_info': {'index': i},
+            })
+        
+        self.dataframe = pd.DataFrame(virtual_data)
+
+    def _download(self, use_origin_parquet=False):
+        pass
+
+    def _read_files_and_tokenize(self):
+        pass
+
+    def resume_dataset_state(self):
+        self.serialize_dataset = False
+        self._create_virtual_dataframe()
+
+    def __len__(self):
+        return self.virtual_size
+
+    def __getitem__(self, item):
+
+        simulator_dir = os.path.join("YOUR_DIR_TO_SAVE_SIMULATOR_LOG", 'simulator')
+        os.makedirs(simulator_dir, exist_ok=True)  
+
+        player_simulator = PlayerSimulator(simulator_dir) 
+
+        user_reply = player_simulator.reply(None)
+
+        history_formatted = [{"role": "朋友", "content": user_reply["content"]}]
+        history_formatted = json.dumps(history_formatted, ensure_ascii=False, indent=2)
+            
+        chat = [{"role":"system","content":system_prompt_trained},{"role":"user","content":user_reply["content"]}]
+        print("chat", chat)
+
+        prompt_with_chat_template = self.tokenizer.apply_chat_template(chat, add_generation_prompt=True, tokenize=False)
+
+        input_ids, attention_mask = verl_F.tokenize_and_postprocess_data(prompt=prompt_with_chat_template,
+                                                                         tokenizer=self.tokenizer,
+                                                                         max_length=self.max_prompt_length,
+                                                                         pad_token_id=self.tokenizer.pad_token_id,
+                                                                         left_pad=True,
+                                                                         truncation=self.truncation)
+
+        position_ids = compute_position_id_with_mask(attention_mask)
+        
+        row_dict = {
+            'index': item,
+            'extra_info': {'index': item},
+        }
+        
+        row_dict['input_ids'] = input_ids[0]
+        row_dict['attention_mask'] = attention_mask[0]
+        row_dict['position_ids'] = position_ids[0]
+
+        if self.trajectory_injection:
+
+            pass
+
+        # encode prompts without chat template
+        if self.return_raw_chat:
+            row_dict['raw_prompt'] = recursive_convert([{"role":"system","content":system_prompt_trained}]+[user_reply])
+            row_dict['simulator'] = player_simulator
+
+        return row_dict
+
+    def __getstate__(self):
+        if not self.serialize_dataset:
+            state = self.__dict__.copy()
             if 'dataframe' in state:
                 del state['dataframe']
             return state
