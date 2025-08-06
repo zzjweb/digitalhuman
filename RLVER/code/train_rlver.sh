@@ -66,7 +66,6 @@ ray job submit --address="http://127.0.0.1:8265" \
     critic.model.fsdp_config.optimizer_offload=False \
     critic.ppo_max_token_len_per_gpu=48000 \
     critic.forward_max_token_len_per_gpu=48000 \
-    reward_model.reward_func_path="YOUR_REWARD_FUNC_PATH" \
     trainer.project_name=verl \
     trainer.experiment_name=$RUN_NAME \
     trainer.default_local_dir="YOUR_DIR_TO_SAVE_CKPTS" \
