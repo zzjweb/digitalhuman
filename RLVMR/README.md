@@ -5,7 +5,7 @@ RLVMR provides agents with fine-grained meta-reasoning rewards, encouraging LLM 
 
 ![The RLVMR framework, comprising cold start and reinforcement learning phases, offers rule-verifiable feedback based on final outcomes and the comparative advantages of meta-reasoning behaviors. The RLVMR framework, comprising cold start and reinforcement learning phases, offers rule-verifiable feedback based on final outcomes and the comparative advantages of meta-reasoning behaviors. ](assets/RLVMR.png "The RLVMR framework, comprising cold start and reinforcement learning phases, offers rule-verifiable feedback based on final outcomes and the comparative advantages of meta-reasoning behaviors. The RLVMR framework, comprising cold start and reinforcement learning phases, offers rule-verifiable feedback based on final outcomes and the comparative advantages of meta-reasoning behaviors. ")
 
-# Environment Setup&#x20;
+## Environment Setup&#x20;
 
 
 
@@ -54,7 +54,7 @@ pip install -e .
 
 
 
-# Start Training
+## Start Training
 
 1. **Prepare cold start data**
 
@@ -103,7 +103,7 @@ bash examples/rlvmr_trainer/run_sciworld.sh
 ```
 
 
-# Customize
+## Customize
 
 - **Meta-reasoning reward rules**
 
@@ -117,11 +117,11 @@ To add a new environment:
 2. Write the corresponding prompt files in the `agent_system/environments/prompts/` directory.
 3. Add an environment manager in `agent_system/environments/env_manager.py` to provide multi-threading support.
 
-# Acknowledgement
+## Acknowledgement
 
 We sincerely appreciate the infrastructure provided by [veRL](https://github.com/volcengine/verl "veRL") and [verl-agent](github.com/langfengQ/verl-agent "verl-agent"). We also thank [ALFWorld](https://github.com/alfworld/alfworld "ALFWorld"), [ScienceWorld](https://github.com/allenai/ScienceWorld "ScienceWorld"), and other projects for offering interactive agent environments.
 
-# Citation
+## Citation
 
 If you find RLVMR helpful in your work, we would appreciate it if you cite our work.
 
